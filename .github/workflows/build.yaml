@@ -3,7 +3,12 @@
 
 name: Java CI Pipeline
 run-name: Deploy by @${{ github.actor }} # by default its the commit message
-on: [push, pull_request]
+on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: false
+        type: string
 #   push:
 #     branches: [ master ]
 #   pull_request:
