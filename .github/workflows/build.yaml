@@ -15,7 +15,7 @@ on:
 #     branches: [ master ]
 
 jobs:
-  build:
+  child-build:
 
     runs-on: ubuntu-latest
     
@@ -36,17 +36,17 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-  post-build:
+  child-post-build:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: List files  
         run: |
           ls -lrta
-          echo "GITHUB_TRIGGERING_ACTOR - ${{ GITHUB_TRIGGERING_ACTOR }}"
-          echo "GITHUB_ACTION_PATH - ${{ GITHUB_ACTION_PATH }}"
-          echo "GITHUB_ACTION_REPOSITORY - ${{ GITHUB_ACTION_REPOSITORY }} "
-          echo "GITHUB_WORKFLOW	- ${{ GITHUB_WORKFLOW	 }}"
+          echo "GITHUB_TRIGGERING_ACTOR - ${GITHUB_TRIGGERING_ACTOR}"
+          echo "GITHUB_ACTION_PATH - ${GITHUB_ACTION_PATH}"
+          echo "GITHUB_ACTION_REPOSITORY - ${GITHUB_ACTION_REPOSITORY} "
+          echo "GITHUB_WORKFLOW	- ${GITHUB_WORKFLOW}"
     # - name: Build and Push Docker Image
     #   uses: mr-smithers-excellent/docker-build-push@v4
     #   with:
