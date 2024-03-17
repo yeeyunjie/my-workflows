@@ -36,8 +36,7 @@ jobs:
     needs: build
     steps:
       - name: List files  
-        run: 
-        - |
+        run: |
           ls -lrta
           echo "GITHUB_TRIGGERING_ACTOR - ${{ GITHUB_TRIGGERING_ACTOR }}"
           echo "GITHUB_ACTION_PATH - ${{ GITHUB_ACTION_PATH }}"
