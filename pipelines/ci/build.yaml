@@ -1,0 +1,53 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: Java CI Pipeline
+run-name: Deploy by @${{ github.actor }} # by default its the commit message
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    # predefined actions are hosted - everyone who uses this will use the checkout command so 
+    # created checkout ocmmand to see - actions is actually a repo
+    - name: Checks out code 
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+  post-build:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: List files  
+        run: 
+        - |
+          ls -lrta
+          echo "GITHUB_TRIGGERING_ACTOR - ${{ GITHUB_TRIGGERING_ACTOR }}"
+          echo "GITHUB_ACTION_PATH - ${{ GITHUB_ACTION_PATH }}"
+          echo "GITHUB_ACTION_REPOSITORY - ${{ GITHUB_ACTION_REPOSITORY }} "
+          echo "GITHUB_WORKFLOW	- ${{ GITHUB_WORKFLOW	 }}"
+    # - name: Build and Push Docker Image
+    #   uses: mr-smithers-excellent/docker-build-push@v4
+    #   with:
+    #     image: nanajanashia/demo-app
+    #     registry: docker.io
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
+         
